@@ -119,68 +119,196 @@ def display_chat_interface():
         st.rerun()
 
 # region <--------- Financial Calculator Functions --------->
+
 def display_financial_calculator():
-    """Display the financial calculator interface"""
-    st.markdown("### 🧮 Financial Calculator")
+    """Display the financial calculator interface with focus on determining sustainable rent"""
+    st.markdown("### 🧮 Sustainable Bid Estimator")
+    st.markdown("""
+    This calculator will help you determine a logical monthly rent you can afford based on your estimated costs and revenue.
+    All amounts should be entered excluding GST.
+    """)
     
-    with st.form("financial_calculator"):
-        # Monthly Costs
-        st.subheader("Monthly Cost Estimation")
-        
-        # Rental costs
-        st.markdown("#### 1. Rental Costs")
-        proposed_bid = st.number_input("Proposed Monthly Bid (SGD)", min_value=0, value=1500)
-        
+    # Initialize calculation results in session state if they don't exist
+    if 'calc_results' not in st.session_state:
+        st.session_state.calc_results = None
+    
+    with st.form("Sustainable Bid Estimator"):
         # Operational costs
-        st.markdown("#### 2. Operational Costs")
+        st.markdown("#### 1. Monthly Operating Costs")
         col1, col2 = st.columns(2)
+        
         with col1:
-            ingredients = st.number_input("Raw Materials & Ingredients (SGD)", min_value=0, value=3000)
-            utilities = st.number_input("Utilities (SGD)", min_value=0, value=500)
+            ingredients = st.number_input("Raw Materials & Ingredients (SGD)", 
+                help="Cost of ingredients and raw materials needed for your dishes",
+                min_value=0, value=3000)
+            
+            utilities = st.number_input("Utilities (SGD)",
+                help="Estimated monthly utilities including electricity and water",
+                min_value=0, value=500)
+            
+            sc_charges = st.number_input("Service & Conservancy Charges (SGD)",
+                help="Monthly S&C charges for the stall",
+                min_value=0, value=300)
+        
         with col2:
-            labor = st.number_input("Labor (SGD)", min_value=0, value=2000)
-            misc_costs = st.number_input("Miscellaneous (SGD)", min_value=0, value=300)
+            manpower = st.number_input("Manpower Cost (SGD)",
+                help="Total monthly wages for all workers including yourself",
+                min_value=0, value=2000)
+            
+            cleaning = st.number_input("Table Cleaning Charges (SGD)",
+                help="Monthly charges for table cleaning service",
+                min_value=0, value=200)
+            
+            misc_costs = st.number_input("Miscellaneous (SGD)",
+                help="Other monthly expenses like maintenance, supplies, etc.",
+                min_value=0, value=300)
         
         # Revenue estimation
-        st.markdown("#### 3. Revenue Estimation")
+        st.markdown("#### 2. Revenue Estimation")
         col3, col4 = st.columns(2)
-        with col3:
-            avg_price = st.number_input("Average Price per Item (SGD)", min_value=0.0, value=5.0)
-            items_per_day = st.number_input("Estimated Items Sold per Day", min_value=0, value=100)
-        with col4:
-            days_per_month = st.number_input("Operating Days per Month", min_value=0, max_value=31, value=26)
         
-        calculate = st.form_submit_button("Calculate Projections")
+        with col3:
+            avg_price = st.number_input("Average Price per Item (SGD)",
+                help="Average selling price of your items before GST",
+                min_value=0.0, value=5.0)
+            
+            items_per_day = st.number_input("Estimated Items Sold per Day",
+                help="Expected number of items you can sell per day",
+                min_value=0, value=100)
+        
+        with col4:
+            days_per_month = st.number_input("Operating Days per Month",
+                help="Number of days you plan to operate per month",
+                min_value=0, max_value=31, value=26)
+        
+        calculate = st.form_submit_button("Calculate Break-even Rent")
         
         if calculate:
+            # Calculate monthly figures
             monthly_revenue = avg_price * items_per_day * days_per_month
-            monthly_costs = proposed_bid + ingredients + utilities + labor + misc_costs
-            monthly_profit = monthly_revenue - monthly_costs
-            profit_margin = (monthly_profit / monthly_revenue) * 100 if monthly_revenue > 0 else 0
+            monthly_costs = ingredients + utilities + manpower + sc_charges + cleaning + misc_costs
+            sustainable_rent = monthly_revenue - monthly_costs
             
-            # Display results
-            st.markdown("### Monthly Projection")
-            metrics_col1, metrics_col2, metrics_col3 = st.columns(3)
-            with metrics_col1:
-                st.metric("Revenue", f"${monthly_revenue:,.2f}")
-            with metrics_col2:
-                st.metric("Costs", f"${monthly_costs:,.2f}")
-            with metrics_col3:
-                st.metric("Net Profit", f"${monthly_profit:,.2f}")
-            
-            # Analysis
-            st.markdown("### Analysis")
-            if profit_margin < 10:
-                st.warning(f"⚠️ Low profit margin ({profit_margin:.1f}%). Consider reviewing your costs or pricing strategy.")
-            elif profit_margin > 30:
-                st.success(f"✅ Healthy profit margin ({profit_margin:.1f}%) projected.")
-            
-            st.markdown(f"""
-            **Key Metrics:**
-            - Break-even Sales per Day: ${(monthly_costs/days_per_month):.2f}
-            - Required Items Sold to Break-even: {(monthly_costs/(avg_price * days_per_month)):.0f} items/day
-            - Current Profit per Item: ${(monthly_profit/(items_per_day * days_per_month)):.2f}
+            # Store results in session state
+            st.session_state.calc_results = {
+                'monthly_revenue': monthly_revenue,
+                'monthly_costs': monthly_costs,
+                'sustainable_rent': sustainable_rent,
+                'items_per_day': items_per_day,
+                'avg_price': avg_price,
+                'days_per_month': days_per_month
+            }
+    
+    # Display results outside the form
+    if st.session_state.calc_results:
+        results = st.session_state.calc_results
+        
+        st.markdown("### Monthly Break-even Analysis")
+        
+        # Key metrics in columns
+        metrics_col1, metrics_col2, metrics_col3 = st.columns(3)
+        with metrics_col1:
+            st.metric("Projected Revenue", f"${results['monthly_revenue']:,.2f}")
+        with metrics_col2:
+            st.metric("Operating Costs", f"${results['monthly_costs']:,.2f}")
+        with metrics_col3:
+            st.metric("Maximum Sustainable Rent", f"${results['sustainable_rent']:,.2f}")
+        
+        # Analysis and recommendations
+        st.markdown("### Bidding Guidance")
+        
+        if results['sustainable_rent'] <= 0:
+            st.error("""
+            ⚠️ Warning: Your operating costs exceed projected revenue. 
+            Consider reviewing your costs or revenue projections before proceeding with a bid.
             """)
+        else:
+            st.success(f"""
+            Based on your projections, you could afford a maximum monthly rent of ${results['sustainable_rent']:,.2f} 
+            while breaking even. For a sustainable business, consider bidding below this amount to ensure profitability.
+            """)
+            
+            # Additional analysis
+            st.markdown("### Additional Insights")
+            st.markdown(f"""
+            - Daily revenue needed to break even: ${(results['monthly_costs']/results['days_per_month']):.2f}
+            - Minimum items to sell daily to break even: {(results['monthly_costs']/(results['avg_price'] * results['days_per_month'])):.0f} items
+            - Current profit margin before rent: {((results['monthly_revenue'] - results['monthly_costs'])/results['monthly_revenue'] * 100):.1f}%
+            """)
+        
+        # Add debug mode toggle
+        debug_mode = st.sidebar.checkbox("Enable Debug Mode")
+        
+        # Expert analysis button outside the form
+        if st.button("💡 Get Expert Analysis"):
+            context = f"""
+            Please analyze these financial projections for a hawker stall bidding decision:
+            Monthly Revenue: \${results['monthly_revenue']:,.0f}
+            Monthly Operating Costs: \${results['monthly_costs']:,.0f}
+            Maximum Sustainable Rent: \${results['sustainable_rent']:,.0f}
+            Daily Items Sold: {results['items_per_day']}
+            Average Price: \${results['avg_price']:.2f}
+            
+            Provide a clear analysis following this EXACT format and indentation:
+
+            1. Business Sustainability Analysis:
+            - Comment on whether revenue can cover costs
+            - State the profit margin
+
+            2. Bidding Considerations:
+            - Suggest a reasonable bid range
+            - List key factors to consider
+
+            3. Risks and Opportunities:
+            Risks:
+            - Risk point 1
+            - Risk point 2
+            - Risk point 3
+
+            Opportunities:
+            - Opportunity point 1
+            - Opportunity point 2
+            - Opportunity point 3
+            
+            Format Requirements:
+            - Use proper indentation as shown above
+            - Start each bullet point with a hyphen (-)
+            - Write dollar amounts as \$X,XXX
+            - Use "between \$X,XXX and \$Y,XXX" for ranges
+            - Round all numbers to whole dollars
+            """
+            
+            with st.spinner('Analyzing your numbers...'):
+                response = st.session_state.qa_chain.invoke({
+                    "question": context,
+                    "chat_history": []
+                })
+                
+                # Clean up the response
+                cleaned_response = (response['answer']
+                    .replace('*', '')
+                    .replace('#', '')
+                    .replace('  ', ' ')
+                    .replace(' ,', ',')
+                    # Fix any inconsistent bullet points
+                    .replace('•', '-')
+                    .replace('* ', '- ')
+                    # Ensure proper spacing after bullet points
+                    .replace('-  ', '- ')
+                    # Fix extra newlines
+                    .replace('\n\n\n', '\n\n'))
+                
+                # Display in a structured way
+                st.markdown("#### Expert Analysis")
+                
+                # Format the text as markdown to maintain hierarchy
+                st.markdown(cleaned_response)
+                
+                if debug_mode:
+                    st.markdown("### Debug View")
+                    st.code(cleaned_response)
+
+
 
 # region <--------- Main App --------->
 def main():
@@ -292,7 +420,7 @@ def main():
             st.session_state.calculator_started = False
     
     with button_col2:
-        if st.button("🧮 Financial Calculator", use_container_width=True):
+        if st.button("🧮 Sustainable Bid Estimator", use_container_width=True):
             st.session_state.calculator_started = True
             st.session_state.chat_started = False
 
