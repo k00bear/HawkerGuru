@@ -10,8 +10,20 @@ from langchain_community.document_loaders import TextLoader, UnstructuredWordDoc
 from langchain.docstore.document import Document
 import json
 import streamlit as st
+from openai import OpenAI
+import tiktoken
 
-load_dotenv()
+if load_dotenv('.env'):
+   # for local development
+   OPENAI_KEY = os.getenv('OPENAI_API_KEY')
+else:
+   OPENAI_KEY = st.secrets['OPENAI_API_KEY']
+
+
+# Pass the API Key to the OpenAI Client
+client = OpenAI(api_key=OPENAI_KEY)
+# Some other code here are omitted for brevity
+
 
 @st.cache_data
 def load_documents(data_dir: str = "Data") -> List[Document]:
