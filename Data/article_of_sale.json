@@ -1,0 +1,122 @@
+[
+  {
+    "Stall Type": "Lock-Up, Market Slab",
+    "Trade Type Category": "Piece & sundry",
+    "Article of Sale": "Piece & sundry goods",
+    "Remarks": "Includes kitchen ware, hardware, textiles, toiletries, clothing, footwear, watches, fashion accessories, costume jewellery, toys, sports accessories.\n \nSale of jewellery, computer games/ videos, handphones and tablets are not allowed. Services such as beauty and photocopying services are also not allowed."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce I",
+    "Article of Sale": "Preserved & dried goods",
+    "Remarks": "Includes salted vegetables/ fish/ eggs, dried prawns, cuttlefish/ mushrooms, onions, garlic, potatoes and provision goods like canned food, cooking oil, sauces, sugar, flour, salt, rice, other condiments, pre-packed titbits (inclusive of biscuits), bottled/ canned/ packet drinks and sweets."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce I",
+    "Article of Sale": "Pork",
+    "Remarks": "Means exclusively pork. Sale of other types of meat together with pork is not allowed."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce I",
+    "Article of Sale": "Beef",
+    "Remarks": "Means exclusively beef. Sale of other types of meat together with beef is not allowed."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce I",
+    "Article of Sale": "Mutton",
+    "Remarks": "Means exclusively mutton. Sale of other types of meat together with mutton is not allowed."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce I",
+    "Article of Sale": "Poultry",
+    "Remarks": "Means exclusively poultry. Sale of other types of meat together with poultry is not allowed."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce I",
+    "Article of Sale": "Frozen goods",
+    "Remarks": "Means various types of frozen meat, including the viscera, frozen peas and pre-packed frozen foodstuffs, in a frozen state. Meat in chilled state is not allowed."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce I",
+    "Article of Sale": "Fresh seafood",
+    "Remarks": "Means fresh fish, squids, prawns, crabs, lobsters and other shellfish."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce I",
+    "Article of Sale": "Processed raw seafood",
+    "Remarks": "Means processed raw seafood products like fish balls, fish cakes and \"Yong Tau Foo\" items."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce I",
+    "Article of Sale": "Whole fruits",
+    "Remarks": "Means all types of fruits in whole. Sale of cut fruits is not allowed."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce II",
+    "Article of Sale": "Vegetables",
+    "Remarks": "Means all types of vegetables and include roots like lotus roots, sweet potatoes, tapioca, radish and fruits that are used for preparation of meals, like gourds, tomatoes, pumpkin and unripe papayas."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce II",
+    "Article of Sale": "Flowers",
+    "Remarks": "Means all types of fresh flowers and potted plants."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce II",
+    "Article of Sale": "Beancakes & noodles",
+    "Remarks": "Includes bean-cakes, \"Mee\", \"Kway Teow\" and \"Bee Tai Mak\". Sale of bean sprouts and pre-packed vegetarian products are allowed."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce II",
+    "Article of Sale": "Eggs",
+    "Remarks": "Includes eggs of hens and quails."
+  },
+  {
+    "Stall Type": "Market Slab",
+    "Trade Type Category": "Market Produce II",
+    "Article of Sale": "Assorted spices",
+    "Remarks": "Means all types of assorted spices."
+  },
+  {
+    "Stall Type": "Cooked Food",
+    "Trade Type Category": "Cooked Food",
+    "Article of Sale": "Cooked Food (Halal)",
+    "Remarks": "Sale of cooked food (Halal) only. Sale of non-halal food is not allowed."
+  },
+  {
+    "Stall Type": "Cooked Food",
+    "Trade Type Category": "Cooked Food",
+    "Article of Sale": "Cooked Food (Indian cuisine)",
+    "Remarks": "Sale of cooked food (Indian cuisine) only. Sale of non-Indian cuisine is not allowed."
+  },
+  {
+    "Stall Type": "Cooked Food",
+    "Trade Type Category": "Cooked Food",
+    "Article of Sale": "Cooked Food",
+    "Remarks": "Sale of any type of cooked food, and hot and cold desserts."
+  },
+  {
+    "Stall Type": "Cooked Food",
+    "Trade Type Category": "Cooked Food",
+    "Article of Sale": "Drinks",
+    "Remarks": "Sale of hot and cold drinks which include package/ bottled/ dispenser drinks, small food items like cakes and buns, or sale of other cold drinks such as soya beans drinks, grass jelly drinks, sugar-cane juice. The sale of solely alcohol is not allowed at drink stalls."
+  },
+  {
+    "Stall Type": "Cooked Food",
+    "Trade Type Category": "Cooked Food",
+    "Article of Sale": "Cut-fruits",
+    "Remarks": "Sale of all types of fruits in ‘cut’ form.   \nSale of jelly, sugar-cane juice and grinded fruit juice are allowed except bottled/ prepared drinks. "
+  }
+]
