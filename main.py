@@ -2,10 +2,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from datetime import datetime
-from processor import setup_hawker_guru
+from src.data_handlers.processor import setup_hawker_guru
 import os
 from dotenv import load_dotenv
-from helper_functions.utility import check_password
+from src.helper_functions.utility import check_password
 
 # Check if the password is correct.
 if not check_password():
@@ -400,7 +400,7 @@ def main():
         st.markdown(f"**Selected Hawker Centre:**\n{hawkercentre}")
         st.markdown(f"**Stall Type:**\n{stalltype}")
         stall_count = get_stall_count(df_hawkercentres, hawkercentre, stalltype)
-        st.markdown(f"**Number of {stalltype} Stalls:**\n{stall_count}")
+        st.markdown(f"**Number of {stalltype} Stalls in this centre:**\n{stall_count}")
         st.markdown('</div>', unsafe_allow_html=True)
 
     with info_col2:

@@ -3,9 +3,13 @@
 import pandas as pd
 import json
 import os
+from pathlib import Path
 from typing import Dict, List
 
-def convert_excel_to_json(data_dir: str = "Data") -> None:
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+DATA_DIR = os.path.join(PROJECT_ROOT, 'data')
+
+def convert_excel_to_json(data_dir: str = DATA_DIR) -> None:
     """
     Convert Excel file to JSON format and save in the same directory
     Args:

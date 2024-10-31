@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import List, Dict
 from dotenv import load_dotenv
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -24,9 +25,11 @@ else:
 client = OpenAI(api_key=OPENAI_KEY)
 # Some other code here are omitted for brevity
 
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+DATA_DIR = os.path.join(PROJECT_ROOT, 'data')
 
 @st.cache_data
-def load_documents(data_dir: str = "Data") -> List[Document]:
+def load_documents(data_dir: str = DATA_DIR) -> List[Document]:
     """
     Load all documents from the data directory
     """
@@ -80,7 +83,7 @@ def load_documents(data_dir: str = "Data") -> List[Document]:
         for doc in tender_docs:
             doc.metadata["type"] = "location_rules"
             documents.append(doc)
-        print(f"Loaded tender notice with restrictions")
+        print(f"Successfully loaded tender notice as location-specific rules document")
 
     # Load other text files
     text_files = [
