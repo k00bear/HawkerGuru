@@ -243,11 +243,11 @@ def display_financial_calculator():
         if st.button("💡 Get Expert Analysis"):
             context = f"""
             Please analyze these financial projections for a hawker stall bidding decision:
-            Monthly Revenue: \${results['monthly_revenue']:,.0f}
-            Monthly Operating Costs: \${results['monthly_costs']:,.0f}
-            Maximum Sustainable Rent: \${results['sustainable_rent']:,.0f}
+            Monthly Revenue: \\${results['monthly_revenue']:,.0f}
+            Monthly Operating Costs: \\${results['monthly_costs']:,.0f}
+            Maximum Sustainable Rent: \\${results['sustainable_rent']:,.0f}
             Daily Items Sold: {results['items_per_day']}
-            Average Price: \${results['avg_price']:.2f}
+            Average Price: \\${results['avg_price']:.2f}
             
             Provide a clear analysis following this EXACT format and indentation:
 
@@ -273,8 +273,8 @@ def display_financial_calculator():
             Format Requirements:
             - Use proper indentation as shown above
             - Start each bullet point with a hyphen (-)
-            - Write dollar amounts as \$X,XXX
-            - Use "between \$X,XXX and \$Y,XXX" for ranges
+            - Write dollar amounts as \\$X,XXX
+            - Use "between \\$X,XXX and \\$Y,XXX" for ranges
             - Round all numbers to whole dollars
             """
             
