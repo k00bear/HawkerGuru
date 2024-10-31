@@ -17,7 +17,7 @@ load_dotenv()
 @st.cache_data
 def load_data():
     """Load and preprocess hawker centre data"""
-    df = pd.read_excel("Data/HawkerCentres.xlsx")
+    df = pd.read_excel("data/HawkerCentres.xlsx")
     df.columns = df.columns.str.strip()
     return df
 
