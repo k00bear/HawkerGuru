@@ -22,3 +22,6 @@ dist/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Raw Data
+Data/01 Raw/
