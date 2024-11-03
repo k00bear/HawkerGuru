@@ -133,7 +133,8 @@ class MapService:
     
     @staticmethod
     def create_interactive_map(selected_centre: str, nearby_centres: List[NearbyCenter],
-                             location_details: LocationDetails, radius_km: float) -> folium.Map:
+                             location_details: LocationDetails, radius_km: float,
+                             df: pd.DataFrame) -> folium.Map:
         """Create an interactive map with markers and radius circle."""
         m = folium.Map(
             location=[location_details.latitude, location_details.longitude],
@@ -154,17 +155,22 @@ class MapService:
         ).add_to(m)
         
         # Add selected centre marker
+        stall_info = MapService._get_stall_counts(df, selected_centre)
+        selected_popup_html = f"""
+        <div style='width: 200px'>
+            <b>{selected_centre}</b><br>
+            Address: {location_details.address}<br>
+            Postal Code: {location_details.postal_code}<br>
+            <br>
+            <b>Stall Count:</b><br>
+            {stall_info}
+        </div>
+        """
+
         folium.CircleMarker(
             location=[location_details.latitude, location_details.longitude],
             radius=10,
-            popup=folium.Popup(
-                f"""<div style='width: 200px'>
-                    <b>{selected_centre}</b><br>
-                    Address: {location_details.address}<br>
-                    Postal Code: {location_details.postal_code}
-                </div>""",
-                max_width=300
-            ),
+            popup=folium.Popup(selected_popup_html, max_width=300),
             color='#DC2626',
             fill=True,
             fill_color='#DC2626',
@@ -175,16 +181,21 @@ class MapService:
         
         # Add nearby centres
         for centre in nearby_centres:
+            nearby_stall_info = MapService._get_stall_counts(df, centre.name)
+            popup_html = f"""
+            <div style='width: 200px'>
+                <b>{centre.name}</b><br>
+                Distance from selected: {centre.distance:.1f} km<br>
+                <br>
+                <b>Stall Count:</b><br>
+                {nearby_stall_info}
+            </div>
+            """
+            
             folium.CircleMarker(
                 location=[centre.lat, centre.lon],
                 radius=8,
-                popup=folium.Popup(
-                    f"""<div style='width: 200px'>
-                        <b>{centre.name}</b><br>
-                        Distance: {centre.distance:.1f} km
-                    </div>""",
-                    max_width=300
-                ),
+                popup=folium.Popup(popup_html, max_width=300),
                 color='#2563EB',
                 fill=True,
                 fill_color='#2563EB',
@@ -202,6 +213,32 @@ class MapService:
         m.fit_bounds(circle_bounds, padding=[30, 30])
         
         return m
+    
+    @staticmethod
+    def _get_stall_counts(df: pd.DataFrame, centre_name: str) -> str:
+        """Helper method to get formatted stall counts for a centre."""
+        try:
+            centre_data = df[df['Hawker Centre'] == centre_name].iloc[0]
+            stall_counts = []
+            
+            # Map of column names to display names
+            stall_types = {
+                'Cooked Food': 'Cooked Food Stalls',
+                'Locked-Up': 'Lock-up Stalls',
+                'Market Slab': 'Market Slab Stalls',
+                'Kiosks': 'Kiosks'
+            }
+            
+            # Get counts for each stall type
+            for col, display_name in stall_types.items():
+                count = centre_data.get(col, 0)
+                if pd.notna(count) and count > 0:
+                    stall_counts.append(f"• {display_name}: {int(count)}")
+            
+            return "<br>".join(stall_counts) if stall_counts else "No stall information available"
+            
+        except (KeyError, IndexError):
+            return "Stall information not available"
 
 class ChatInterface:
     """Handles chat interface and interactions."""
@@ -209,7 +246,7 @@ class ChatInterface:
     @staticmethod
     def display_chat_interface(df: pd.DataFrame, hawker_centre: str, stall_type: str) -> None:
         """Display and handle the chat interface."""
-        st.markdown("### 💬 Chat with Hawker Guru")
+        st.markdown("### 💬 Chat with HawkerGuru")
         
         for message in st.session_state.chat_history:
             with st.chat_message(message["role"]):
@@ -238,7 +275,7 @@ class ChatInterface:
     def _build_chat_context(df: pd.DataFrame, hawker_centre: str, 
                            stall_type: str, prompt: str) -> str:
         """Build context for the chat interaction."""
-        return f"""You are Hawker Guru, a helpful assistant for Singapore hawker stall bidding. 
+        return f"""You are HawkerGuru, a helpful assistant for Singapore hawker stall bidding. 
         When answering questions, follow these guidelines:
 
         1. For general questions about tendering process, requirements, or guidelines:
@@ -400,7 +437,7 @@ class FinancialCalculator:
     @staticmethod
     def _offer_expert_analysis(results: CalculationResults) -> None:
         """Offer expert analysis of financial projections."""
-        if st.button("💡 Get Expert Analysis"):
+        if st.button("💡 Get HawkerGuru Analysis"):
             context = f"""
             Please analyze these financial projections for a hawker stall bidding decision:
             Monthly Revenue: \\${results.monthly_revenue:,.0f}
@@ -506,6 +543,16 @@ class UIComponents:
         }
         </style>
         """, unsafe_allow_html=True)
+    
+    @staticmethod
+    def show_footer() -> None:
+        """Display footer with attribution."""
+        footer_html = """
+        <div class="footer">
+            Made with ❤️ by koobear | ABC2024 Graduation Project | © 2024
+        </div>
+        """
+        st.markdown(footer_html, unsafe_allow_html=True)
 
     @staticmethod
     def show_disclaimer() -> bool:
@@ -551,7 +598,7 @@ class HawkerGuruApp:
     def run(self) -> None:
         """Run the main application."""
         st.markdown('<p class="big-font">🏪 HawkerGuru</p>', unsafe_allow_html=True)
-        st.markdown("### Your Guide to Singapore Hawker Stall Bidding")
+        st.markdown("### Your Smart Assistant for Hawker Stall Tendering")
         
         if not UIComponents.show_disclaimer():
             st.warning("Please read and acknowledge the disclaimer above to proceed.")
@@ -576,6 +623,8 @@ class HawkerGuruApp:
                 - Use the **Chat** feature to ask questions about the tender process
                 - Use the **Calculator** to estimate your business costs and potential returns
                 """)
+            
+        UIComponents.show_footer()
     
     def _display_selection_interface(self, hawker_list: List[str]) -> None:
         """Display hawker centre and stall type selection interface."""
@@ -593,13 +642,13 @@ class HawkerGuruApp:
     def _display_location_details(self) -> None:
         """Display location details and map."""
         st.markdown("---")
-        st.markdown("### Selected Location Details")
+        st.markdown("### Selected Hawker Centre Details")
         
         col1, col2 = st.columns([3, 2])
         
         with col1:
             selected_radius = st.select_slider(
-                "Show other centres within radius (km):",
+                "Show nearby hawker centres in blue dots within radius (km):",
                 options=RADIUS_OPTIONS,
                 value=DEFAULT_RADIUS
             )
@@ -620,7 +669,8 @@ class HawkerGuruApp:
                     st.session_state.selected_hawkercentre,
                     nearby,
                     location_details,
-                    selected_radius
+                    selected_radius,
+                    self.df
                 )
                 st_folium(m, height=500, use_container_width=True)
             else:
@@ -631,20 +681,40 @@ class HawkerGuruApp:
     
     def _display_centre_details(self, location_details: LocationDetails) -> None:
         """Display detailed information about the selected centre."""
-        st.markdown("#### Selected Centre Details")
-        st.markdown(f"**Centre Name:**\n{st.session_state.selected_hawkercentre}")
-        st.markdown(f"**Stall Type:**\n{st.session_state.selected_stalltype}")
+        # Selection section
+        with st.container():
+            st.markdown("##### 🎯 Your Selection")
+            st.markdown(f"**Hawker Centre:**\n{st.session_state.selected_hawkercentre}")
+            st.markdown(f"**Stall Type:**\n{st.session_state.selected_stalltype}")
+            st.markdown(f" ")
         
-        stall_count = DataLoader.get_stall_count(
-            self.df,
-            st.session_state.selected_hawkercentre,
-            st.session_state.selected_stalltype
-        )
-        st.markdown(f"**Number of {st.session_state.selected_stalltype} Stalls:**\n{stall_count}")
-        st.markdown(f"**Address:**\n{location_details.address}")
+        # Location section
+        with st.container():
+            st.markdown("##### 📍 Location Details")
+            st.markdown(f"**Address:**\n{location_details.address}")
+            if location_details.postal_code:
+                st.markdown(f"**Postal Code:**\n{location_details.postal_code}")
+            st.markdown(f" ")
         
-        if location_details.postal_code:
-            st.markdown(f"**Postal Code:**\n{location_details.postal_code}")
+        # Stalls section
+        with st.container():
+            st.markdown("##### 🏪 Stall Counts")
+            # Get centre data
+            centre_data = self.df[self.df['Hawker Centre'] == st.session_state.selected_hawkercentre].iloc[0]
+            
+            # Define stall types and their display names
+            stall_types = {
+                'Cooked Food': 'Cooked Food Stalls',
+                'Locked-Up': 'Lock-up Stalls',
+                'Market Slab': 'Market Slab Stalls',
+                'Kiosks': 'Kiosks'
+            }
+            
+            # Display counts for each stall type
+            for col, display_name in stall_types.items():
+                count = centre_data.get(col, 0)
+                if pd.notna(count) and count > 0:
+                    st.markdown(f"• {display_name}: {int(count)}")
     
     def _display_action_buttons(self) -> None:
         """Display main action buttons."""
