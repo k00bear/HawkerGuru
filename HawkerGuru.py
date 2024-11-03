@@ -159,8 +159,7 @@ class MapService:
         selected_popup_html = f"""
         <div style='width: 200px'>
             <b>{selected_centre}</b><br>
-            Address: {location_details.address}<br>
-            Postal Code: {location_details.postal_code}<br>
+            {location_details.address} Singapore {location_details.postal_code}<Br>
             <br>
             <b>Stall Count:</b><br>
             {stall_info}
@@ -690,15 +689,13 @@ class HawkerGuruApp:
         
         # Location section
         with st.container():
-            st.markdown("##### 📍 Location Details")
-            st.markdown(f"**Address:**\n{location_details.address}")
-            if location_details.postal_code:
-                st.markdown(f"**Postal Code:**\n{location_details.postal_code}")
+            st.markdown("##### 📍 Centre Address")
+            st.markdown(f"{location_details.address} Singapore {location_details.postal_code}")
             st.markdown(f" ")
         
         # Stalls section
         with st.container():
-            st.markdown("##### 🏪 Stall Counts")
+            st.markdown("##### 🏪 Stall Count")
             # Get centre data
             centre_data = self.df[self.df['Hawker Centre'] == st.session_state.selected_hawkercentre].iloc[0]
             
@@ -714,7 +711,7 @@ class HawkerGuruApp:
             for col, display_name in stall_types.items():
                 count = centre_data.get(col, 0)
                 if pd.notna(count) and count > 0:
-                    st.markdown(f"• {display_name}: {int(count)}")
+                    st.markdown(f"• **{display_name}**: {int(count)}")
     
     def _display_action_buttons(self) -> None:
         """Display main action buttons."""
