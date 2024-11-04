@@ -299,37 +299,52 @@ class ChatInterface:
         """
 
 class FinancialCalculator:
-    """Handles financial calculations and display."""
+    """Handles rental calculations and financial projections."""
     
     @staticmethod
     def calculate_financials(revenue_params: Dict, cost_params: Dict) -> CalculationResults:
         """Calculate financial metrics."""
+        # Calculate monthly revenue
         monthly_revenue = (revenue_params['avg_price'] * 
-                         revenue_params['items_per_day'] * 
-                         revenue_params['days_per_month'])
+                        revenue_params['items_per_day'] * 
+                        revenue_params['days_per_month'])
         
-        monthly_costs = sum(cost_params.values())
-        sustainable_rent = monthly_revenue - monthly_costs
+        # Calculate total monthly costs excluding rent
+        operating_costs = sum(value for key, value in cost_params.items() 
+                            if key != 'personal_income')
+        
+        # Total costs including personal income
+        total_monthly_costs = operating_costs + cost_params['personal_income']
+        
+        # Calculate sustainable rent (revenue minus all costs including personal income)
+        sustainable_rent = monthly_revenue - total_monthly_costs
         
         return CalculationResults(
             monthly_revenue=monthly_revenue,
-            monthly_costs=monthly_costs,
+            monthly_costs=total_monthly_costs,
             sustainable_rent=sustainable_rent,
             items_per_day=revenue_params['items_per_day'],
             avg_price=revenue_params['avg_price'],
-            days_per_month=revenue_params['days_per_month']
+            days_per_month=revenue_params['days_per_month'],
+            personal_income=cost_params['personal_income'],
+            costs_breakdown=cost_params
         )
     
     @staticmethod
     def display_calculator() -> None:
         """Display the financial calculator interface."""
-        st.markdown("### 🧮 Sustainable Bid Estimator")
+        st.markdown("### 🧮 Sustainable Bid Calculator")
         st.markdown("""
-        This calculator will help you determine a logical monthly rent you can afford based on 
-        your estimated costs and revenue. All amounts should be entered excluding GST.
+        Find out the maximum monthly rent you can afford before your business starts losing money. Since your bid amount 
+        becomes your monthly rent, this calculator helps you:
+        - Calculate your break-even point based on expected costs and revenue
+        - Determine a sustainable bid amount that keeps your business profitable
+        - Avoid overbidding that could strain your business finances
+        
+        *Note: Please enter all amounts excluding GST.*
         """)
         
-        with st.form("Sustainable Bid Estimator"):
+        with st.form("Sustainable Bid Calculator"):
             cost_params = FinancialCalculator._get_cost_inputs()
             revenue_params = FinancialCalculator._get_revenue_inputs()
             
@@ -344,21 +359,55 @@ class FinancialCalculator:
     def _get_cost_inputs() -> Dict:
         """Get cost inputs from user."""
         st.markdown("#### 1. Monthly Operating Costs")
+        
+        st.markdown("##### Essential Income")
+        personal_income = st.number_input(
+            "Your Target Monthly Income (SGD)",
+            help="How much you need to earn monthly to support yourself/family",
+            min_value=0,
+            value=2500,
+            step=100
+        )
+        
+        st.markdown("##### Operating Expenses")
         col1, col2 = st.columns(2)
         
         with col1:
-            ingredients = st.number_input("Raw Materials & Ingredients (SGD)", 
-                min_value=0, value=3000)
-            utilities = st.number_input("Utilities (SGD)", min_value=0, value=500)
-            sc_charges = st.number_input("Service & Conservancy Charges (SGD)", 
-                min_value=0, value=300)
+            ingredients = st.number_input(
+                "Raw Materials & Ingredients (SGD)", 
+                min_value=0, 
+                value=3000
+            )
+            utilities = st.number_input(
+                "Utilities (SGD)", 
+                min_value=0, 
+                value=500
+            )
+            sc_charges = st.number_input(
+                "Service & Conservancy Charges (SGD)", 
+                min_value=0, 
+                value=300
+            )
         
         with col2:
-            manpower = st.number_input("Manpower Cost (SGD)", min_value=0, value=2000)
-            cleaning = st.number_input("Table Cleaning Charges (SGD)", min_value=0, value=200)
-            misc_costs = st.number_input("Miscellaneous (SGD)", min_value=0, value=300)
+            manpower = st.number_input(
+                "Manpower Cost (SGD)", 
+                min_value=0, 
+                value=2000
+            )
+            cleaning = st.number_input(
+                "Table Cleaning Charges (SGD)", 
+                min_value=0, 
+                value=200
+            )
+            misc_costs = st.number_input(
+                "Miscellaneous (SGD)", 
+                min_value=0, 
+                value=300
+            )
         
         return {
+            'personal_income': personal_income,
             'ingredients': ingredients,
             'utilities': utilities,
             'sc_charges': sc_charges,
@@ -381,110 +430,167 @@ class FinancialCalculator:
         
         with col2:
             days_per_month = st.number_input("Operating Days per Month",
-                min_value=0, max_value=31, value=26)
+                min_value=0, max_value=31, value=24)
         
         return {
             'avg_price': avg_price,
             'items_per_day': items_per_day,
             'days_per_month': days_per_month
         }
-    
+
     @staticmethod
     def _display_results(results: CalculationResults) -> None:
         """Display calculation results."""
+        st.info("""
+        ℹ️ **Important Note**
+                
+        This calculator helps you understand your business finances and shows the maximum monthly rent you can afford 
+        while ensuring you earn your target monthly income. For a safer bid, consider offering 20-30% below this maximum. 
+        
+        **Remember**: The final bidding decision is yours. Many factors affect business success, and market conditions can vary. 
+        Use these insights as one of many tools in your decision-making process.
+        """)
+        
         st.markdown("### Monthly Break-even Analysis")
         
-        metrics_col1, metrics_col2, metrics_col3 = st.columns(3)
-        with metrics_col1:
-            st.metric("Projected Revenue", f"${results.monthly_revenue:,.2f}")
-        with metrics_col2:
-            st.metric("Operating Costs", f"${results.monthly_costs:,.2f}")
-        with metrics_col3:
-            st.metric("Maximum Sustainable Rent", f"${results.sustainable_rent:,.2f}")
+        # Display key metrics
+        col1, col2, col3, col4 = st.columns(4)
         
-        FinancialCalculator._display_analysis(results)
-    
-    @staticmethod
-    def _display_analysis(results: CalculationResults) -> None:
-        """Display financial analysis and recommendations."""
-        st.markdown("### Bidding Guidance")
+        with col1:
+            st.metric(
+                "Monthly Revenue", 
+                f"${results.monthly_revenue:,.2f}",
+                help="Expected monthly revenue based on your sales projections"
+            )
         
+        with col2:
+            operating_costs = sum(value for key, value in results.costs_breakdown.items() 
+                                if key != 'personal_income')
+            st.metric(
+                "Operating Costs", 
+                f"${operating_costs:,.2f}",
+                help="Total monthly operating expenses excluding your income"
+            )
+        
+        with col3:
+            st.metric(
+                "Your Income", 
+                f"${results.personal_income:,.2f}",
+                help="Your target monthly income"
+            )
+        
+        with col4:
+            st.metric(
+                "Maximum Bid",
+                f"${results.sustainable_rent:,.2f}",
+                help="Maximum monthly rent you can afford while meeting your income target"
+            )
+        
+        # Analysis and recommendations
         if results.sustainable_rent <= 0:
             st.error("""
-            ⚠️ Warning: Your operating costs exceed projected revenue. 
-            Consider reviewing your costs or revenue projections before proceeding with a bid.
+            ⚠️ **Warning**: With current projections, the business cannot support your income target.
+            
+            Consider these adjustments:
+            1. Increase average selling price
+            2. Increase daily sales target
+            3. Reduce operating costs where possible
+            4. Adjust your monthly income target
             """)
         else:
+            recommended_bid = results.sustainable_rent * 0.75  # 25% safety margin
             st.success(f"""
-            Based on your projections, you could afford a maximum monthly rent of 
-            ${results.sustainable_rent:,.2f} while breaking even. For a sustainable business, 
-            consider bidding below this amount to ensure profitability.
+            ✅ **Bid Recommendation**:
+            - Maximum affordable rent: \\${results.sustainable_rent:,.2f}
+            - Recommended bid range: \\${recommended_bid:.2f} - \\${results.sustainable_rent:,.2f}
+            - This ensures you'll earn your target monthly income of \\${results.personal_income:,.2f}
             """)
             
-            st.markdown("### Additional Insights")
-            st.markdown(f"""
-            - Daily revenue needed to break even: 
-              ${(results.monthly_costs/results.days_per_month):.2f}
-            - Minimum items to sell daily to break even: 
-              {(results.monthly_costs/(results.avg_price * results.days_per_month)):.0f} items
-            - Current profit margin before rent: 
-              {((results.monthly_revenue - results.monthly_costs)/results.monthly_revenue * 100):.1f}%
+            # Add safety note
+            st.info("""
+            💡 **Safety Tip**: 
+            Bidding below the maximum gives you a safety margin for:
+            - Slower months
+            - Unexpected expenses
+            - Business adjustments
             """)
-        
-        FinancialCalculator._offer_expert_analysis(results)
-    
+            
+        FinancialCalculator._offer_simple_review(results)
+
     @staticmethod
-    def _offer_expert_analysis(results: CalculationResults) -> None:
-        """Offer expert analysis of financial projections."""
-        if st.button("💡 Get HawkerGuru Analysis"):
+    def _offer_simple_review(results: CalculationResults) -> None:
+        """Offer simplified expert review of financial projections."""
+        # Create some spacing before the review button
+        st.markdown("---")
+        
+        if st.button("💡 Get Simple Business Review"):
+            # Prepare the context for the AI
             context = f"""
-            Please analyze these financial projections for a hawker stall bidding decision:
-            Monthly Revenue: \\${results.monthly_revenue:,.0f}
-            Monthly Operating Costs: \\${results.monthly_costs:,.0f}
-            Maximum Sustainable Rent: \\${results.sustainable_rent:,.0f}
-            Daily Items Sold: {results.items_per_day}
-            Average Price: \\${results.avg_price:.2f}
+            Based on these numbers:
+            - Selling {results.items_per_day} items per day
+            - At ${results.avg_price:.2f} per item
+            - Operating {results.days_per_month} days monthly
+            - Aiming to earn ${results.personal_income:,.2f} monthly
+            - Total monthly costs: ${results.monthly_costs:,.2f}
+            - Expected monthly revenue: ${results.monthly_revenue:,.2f}
             
-            Provide a clear analysis following this EXACT format and indentation:
-
-            1. Business Sustainability Analysis:
-            - Comment on whether revenue can cover costs
-            - State the profit margin
-
-            2. Bidding Considerations:
-            - Suggest a reasonable bid range
-            - List key factors to consider
-
-            3. Risks and Opportunities:
-            Risks:
-            - Risk point 1
-            - Risk point 2
-            - Risk point 3
-
-            Opportunities:
-            - Opportunity point 1
-            - Opportunity point 2
-            - Opportunity point 3
+            Provide a very simple, practical review in exactly this format:
+            
+            1. "Can this business work?"
+            Give a straightforward yes/no/maybe answer with one simple reason.
+            
+            2. "Is your sales target realistic?"
+            Comment if selling {results.items_per_day} items daily is reasonable for a hawker stall.
+            
+            3. "One thing to watch out for"
+            Highlight the single most important risk or concern.
+            
+            4. "One suggestion to consider"
+            Provide one practical suggestion to improve the business plan.
+            
+            Use simple language that a hawker would understand. Avoid business jargon.
+            Keep each answer to 1-2 short sentences only.
+            Base your answers on typical hawker stall operations in Singapore.
             """
             
-            with st.spinner('Analyzing your numbers...'):
+            # Show loading spinner while getting review
+            with st.spinner('Reviewing your numbers...'):
                 response = st.session_state.qa_chain.invoke({
                     "question": context,
                     "chat_history": []
                 })
                 
-                cleaned_response = (response['answer']
-                    .replace('*', '')
-                    .replace('#', '')
-                    .replace('  ', ' ')
-                    .replace(' ,', ',')
-                    .replace('•', '-')
-                    .replace('* ', '- ')
-                    .replace('-  ', '- ')
-                    .replace('\n\n\n', '\n\n'))
+                # Create a clean layout for the review
+                st.markdown("#### 👀 Simple Business Review")
                 
-                st.markdown("#### Expert Analysis")
-                st.markdown(cleaned_response)
+                # Add some style to the review
+                styled_response = response['answer'].replace(
+                    '1. "Can this business work?"',
+                    '##### 1. Can this business work? 🤔'
+                ).replace(
+                    '2. "Is your sales target realistic?"',
+                    '##### 2. Is your sales target realistic? 🎯'
+                ).replace(
+                    '3. "One thing to watch out for"',
+                    '##### 3. One thing to watch out for ⚠️'
+                ).replace(
+                    '4. "One suggestion to consider"',
+                    '##### 4. One suggestion to consider 💡'
+                )
+                
+                st.markdown(styled_response)
+                
+                # Add reminder about the review's limitations
+                st.info("""
+                💡 **Remember**: 
+                This is just a general review based on typical hawker businesses. 
+                Your actual results may vary depending on your:
+                - Location
+                - Type of food
+                - Cooking skills and experience
+                - Customer service
+                - Competition in the area
+                """)
 
 class UIComponents:
     """Handles UI components and styling."""
@@ -597,10 +703,11 @@ class HawkerGuruApp:
     def run(self) -> None:
         """Run the main application."""
         st.markdown('<p class="big-font">🏪 HawkerGuru</p>', unsafe_allow_html=True)
-        st.markdown("### Your Smart Assistant for Hawker Stall Tendering")
+        st.markdown("### Your Smart Assistant to Bidding for a Hawker Stall")
         
         if not UIComponents.show_disclaimer():
             st.warning("Please read and acknowledge the disclaimer above to proceed.")
+            UIComponents.show_footer()  # Show footer even when disclaimer isn't accepted
             return
         
         hawker_list = sorted(self.df["Hawker Centre"].tolist())
@@ -608,20 +715,32 @@ class HawkerGuruApp:
         self._display_location_details()
         self._display_action_buttons()
         
-        if st.session_state.chat_started:
-            ChatInterface.display_chat_interface(
-                self.df, 
-                st.session_state.selected_hawkercentre, 
-                st.session_state.selected_stalltype
-            )
-        elif st.session_state.calculator_started:
-            FinancialCalculator.display_calculator()
-        else:
-            st.info("""
-                👆 Select a hawker centre and stall type above, then:
-                - Use the **Chat** feature to ask questions about the tender process
-                - Use the **Calculator** to estimate your business costs and potential returns
-                """)
+        main_content = st.container()
+        with main_content:
+            if st.session_state.chat_started:
+                ChatInterface.display_chat_interface(
+                    self.df, 
+                    st.session_state.selected_hawkercentre, 
+                    st.session_state.selected_stalltype
+                )
+            elif st.session_state.calculator_started:
+                FinancialCalculator.display_calculator()
+            else:
+                st.info("""
+                    ✨ Ready to help you with your hawker stall tender! Choose one of these options:
+                    
+                    💬 **Ask Questions**
+                    Click "Chat with HawkerGuru" to get answers about:
+                    - Tender requirements and rules
+                    - What you can sell in different stalls
+                    - Location-specific guidelines
+                    
+                    🧮 **Plan Your Bid**
+                    Click "Sustainable Bid Calculator" to:
+                    - Calculate a suitable rental bid based on your business plan
+                    - Estimate your monthly costs and revenue
+                    - Check if your planned rental is affordable
+                    """)
             
         UIComponents.show_footer()
     
@@ -719,12 +838,12 @@ class HawkerGuruApp:
         col1, col2 = st.columns(2)
         
         with col1:
-            if st.button("💬 Chat with Hawker Guru", use_container_width=True):
+            if st.button("💬 Chat with HawkerGuru", use_container_width=True):
                 st.session_state.chat_started = True
                 st.session_state.calculator_started = False
         
         with col2:
-            if st.button("🧮 Sustainable Bid Estimator", use_container_width=True):
+            if st.button("🧮 Sustainable Bid Calculator", use_container_width=True):
                 st.session_state.calculator_started = True
                 st.session_state.chat_started = False
 

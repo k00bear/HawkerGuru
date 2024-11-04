@@ -31,6 +31,8 @@ class CalculationResults:
     items_per_day: int
     avg_price: float
     days_per_month: int
+    personal_income: float
+    costs_breakdown: Dict[str, float]
 
 @dataclass
 class ChatMessage:
