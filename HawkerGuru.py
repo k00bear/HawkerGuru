@@ -15,7 +15,7 @@ import os
 from dotenv import load_dotenv
 from math import radians, sin, cos, sqrt, atan2
 
-from src.data_handlers.processor import setup_hawker_guru
+from src.data_handlers.qa_chain import setup_hawker_guru
 from src.helper_functions.utility import check_password
 from src.data_handlers.data_models import LocationDetails, NearbyCenter, CalculationResults
 
@@ -528,11 +528,11 @@ class FinancialCalculator:
             context = f"""
             Based on these numbers:
             - Selling {results.items_per_day} items per day
-            - At ${results.avg_price:.2f} per item
+            - At \\${results.avg_price:.2f} per item
             - Operating {results.days_per_month} days monthly
-            - Aiming to earn ${results.personal_income:,.2f} monthly
-            - Total monthly costs: ${results.monthly_costs:,.2f}
-            - Expected monthly revenue: ${results.monthly_revenue:,.2f}
+            - Aiming to earn \\${results.personal_income:,.2f} monthly
+            - Total monthly costs: \\${results.monthly_costs:,.2f}
+            - Expected monthly revenue: \\${results.monthly_revenue:,.2f}
             
             Provide a very simple, practical review in exactly this format:
             

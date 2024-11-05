@@ -1,0 +1,321 @@
+<!-- Document Metadata
+Type: FAQ
+Purpose: Quick reference guide for e-tender process
+Target Users: New hawker stall tenderers
+Last Updated: March 2024
+Topics: eligibility, e-tender process, payments, security, data protection
+-->
+
+# Frequently Asked Questions (FAQs) on Electronic Tender (e-Tender)
+
+Frequently Asked Questions (FAQs) on
+Electronic Tender (e-Tender): Tendering for a Hawker Stall
+
+## Eligibility
+
+### Am I eligible to apply for a hawker stall?
+
+To be eligible as a stallholder, you must be:
+A Singapore Citizen or Permanent Resident.
+21 years old and above.
+You must not be:
+Debarred from holding a SFA hawker licence.
+A former assistant / nominee who was de-registered by NEA.
+Banned by the Government / Statutory Boards from taking part in any business tenders.
+An undischarged bankrupt.
+Already renting or a joint operator of two cooked food stalls in markets / hawker centres managed by NEA. The maximum number of cooked food stalls any individual can rent is two.
+
+## About e-Tender
+
+### What is e-Tender?
+
+Electronic tender, or e-Tender, is the process of offering vacant market / hawker stalls and receiving tender bids through the FormSG online platform. Tenderers can participate in the              e-Tender by submitting tender bids through FormSG.
+
+### Why is NEA moving from manual tender forms submission to e-Tender?
+
+NEA is moving from a manual tender form submission to e-Tender to provide a digital method of submitting tender bids. This is done via the online platform, FormSG. e-Tender allows greater flexibility for tenderers, who can now submit their bids anytime and anywhere during the tender opening period. Tenderers no longer need to physically purchase and submit the tender document at our NEA One-Stop Information and Service Centre (OSISC) at HDB Hub.
+
+## Preparations Before Tendering
+
+for a Hawker Stall
+
+### What do I need to prepare before submitting an online bid?
+
+You are required to have:
+Computer / laptop / tablet / mobile phone with internet access.
+Singpass / Singpass mobile app.
+A valid email account.
+Debit card / Credit card / PayNow to make online payment of $
+### Q510: What are the charges for e-Tender?
+
+Tenderers are required to pay a tender deposit of $500 and a non-refundable processing fee of $10 using their debit / credit card or PayNow for each stall tendered for, before the e-Tender closing date and time. Any other payment modes are not accepted.
+
+### I do not have computer / laptop / tablet / mobile phone. What should I do?
+
+You may visit any of the Citizen Connect Centres (CCC) in Community Clubs to use the e-kiosks.
+
+### I do not have Singpass or I have forgotten my Singpass password. What should I do?
+
+You can register for or reset your Singpass instantly at https://www.singpass.gov.sg.  Alternatively, you may visit any of the Singpass counters in person. You will need to bring the necessary identification documents, such as your original copy of NRIC, for verification. You may locate a Singpass counter near you at https://www.singpass.gov.sg/home/ui/counter-locations
+
+### I do not have an email address. What should I do?
+
+You must have a valid email address before submitting an online bid. If you do not have an email address, you may visit a website that offers email services such as 'gmail.com' or 'outlook.com' and follow the instructions on the website to create an email account.
+
+### I do not have a PayNow account to pay the charges for E-Tender. What should I do?
+
+You may contact your bank for assistance on setting up online / mobile banking. Alternatively, you may make the payment using a debit card or credit card.
+
+## Considerations for Tendering
+
+for a Hawker Stall
+
+### How much should I bid?
+
+When deciding how much to bid for a stall at a particular hawker centre, you should carefully consider the overall overhead costs for your business and submit your tender at a rent that is sustainable. You may refer to NEA website (go.gov.sg/tendernotice) for the list of successful tender bids in the past 12 months. This information can serve as a reference for you to decide how much you should bid for a stall at a particular hawker centre. If your bid is successful, the bid amount will be the monthly rent that you pay for the stall (before GST).
+
+### What are the other costs involved?
+
+In addition to your bid amount, which will be the monthly stall rental for your 3-year tenancy term, it is important to take into account the following costs involved to ensure that your business is sustainable.
+Service & Conservancy Charges (S&CC).
+Utilities.
+Table-cleaning fee (for cooked food stalls only).
+Wages for hawker assistants.
+Cost of goods / raw ingredients.
+By taking all these costs into consideration, you can make an informed decision on how much to bid for a hawker stall.
+
+### Should I visit the hawker centre and view the stall location?
+
+We recommend that you visit the hawker centre and view the location of your desired vacant stall. This will allow you to assess the human traffic in the area and identify any nearby competitors. By doing so, you can make a more informed decision on whether the location is suitable for your business.
+
+### Should I complete and pass the Food Safety Course before operating a cooked food stall?
+
+To operate a cooked food stall, you must complete and pass the Food Safety Course Level 1 (FSC L
+### Q1: or FSC L1 (Refresher) provided by any of the SkillsFuture Singapore (SSG)-approved training providers listed at www.sfa.gov.sg/food-retail/information-for-food-handlers/information-for-food-handlers.
+
+## Submitting a Tender Bid
+
+### When is the e-Tender exercise?
+
+NEA’s e-Tender exercise is typically held from the 13th (
+### Q10: 30am) to 26th (10.30am) of every month. If the 13th or 26th falls on a weekend / public holiday, the tender will start / end on the next working day.
+
+### Where can I find information on the stalls available for tender?
+
+Details of the tender are published in The Straits Times, Lianhe Zaobao, Berita Harian and Tamil Murasu, on the tender opening day. This information will also be posted on our website at go.gov.sg/tendernotice and displayed on the notice board at our One-Stop Information and Service Centre (OSISC) located at HDB Hub (East Wing), 480 Lorong 6 Toa Payoh, #26-01, Singapore 
+### Q310480: How do I submit e-Tender via FormSG?
+
+If you need assistance to submit an e-Tender bid, you may refer to the brochure or video on NEA website at go.gov.sg/tendernotice.
+
+### How do I use PayNow to make payment?
+
+You may follow the steps below to make payment via PayNow:
+On the FormSG payment page, select PayNow as the mode of payment. You will be redirected to a page with a QR code.
+Save the QR code to your mobile phone’s photo library or take a screenshot of the QR code.
+Open your bank’s mobile banking app.
+Select the option to “Scan and Pay”.
+Upload the QR code that you have saved to your mobile phone’s photo library.
+To proceed with payment, login using your user ID and password / PIN.
+Confirm the payment amount of $510 and proceed to make payment.
+The payee should indicate ‘Stripe Payments Singapore Pte Ltd’.
+The above steps may differ for different banks. Please refer to your bank's website for specific details on using PayNow to make payment.
+
+### Can I use another person’s Singpass to login to FormSG and submit my tender bid?
+
+Tenderers are required to access the e-Tender system using their own SingPass credentials to submit tender bids through FormSG. The details submitted in FormSG will be used for the Tenancy Agreement in the event that your tender bid is successful.
+
+### I have changed my mobile number. How do I update it in Singpass?
+
+You may log in to your Singpass account at https://www.singpass.gov.sg/home/ui/login and select ‘Update Profile’ to update your mobile number.
+
+### I have changed my residential address. How do I update my address in Singpass?
+
+You may visit Immigration & Checkpoints Authority (ICA)’s website at https://www.ica.gov.sg/documents/ic/update_residential_address to update your residential address. Once updated, your address registered with ICA will be automatically synced with Singpass.
+
+### I encountered error and am unable to submit my tender bid. What should I do?
+
+FormSG is compatible with most browsers and platforms, but the user experience may vary depending on the technical capabilities of your device, platform and browser. If you encounter any issues accessing or submitting FormSG, you may visit our One-Stop Information and Service Centre (OSISC) located at HDB Hub (East Wing), 480 Lorong 6 Toa Payoh, #26-
+### Q01: Our OSISC is open from Monday to Friday, 8.30am to 5.30pm (closed on Saturday, Sunday and Public Holidays).
+
+### What should I do if I keyed a wrong email address?
+
+If you have keyed in the wrong email address, you will not receive the One-Time-Password (OTP). Please key in your email address again and click ‘Verify’. You will receive an OTP from FormSG which is sent to the email address you have provided. If you did not receive any OTP, you may wish to check your junk mail folder, to verify that the email was not inadvertently directed to that folder.
+
+### How do I know that I have submitted my bid successfully?
+
+After successfully submitting your e-Tender bid through FormSG, you will receive an acknowledgment email from FormSG confirming that your submission has been received and that the payment for the tender deposit of $500 and non-refundable processing fee of $10 has been successful.
+You will also receive an email on the payment receipt from Stripe (NEA partners with Stripe to provide payment services).
+You can also refer to your bank statement to view the payment made which is reflected as:
+‘NEA-Hawker Tender’ for payment by debit / credit card payment;
+‘Stripe Payments Singapore Pte Ltd’ for payment by PayNow.
+
+### What if my payment is unsuccessful?
+
+Tenderers are required to pay a tender deposit of $500 and a non-refundable processing fee of $10 for each stall tendered for, using debit card, credit card or PayNow. If your payment is unsuccessful, you may need to choose a different payment method. If the payment is unsuccessful, your tender bid may be rejected.
+The payment for the tender deposit and processing fee must be approved before FormSG can be submitted successfully. Please note that the payment and FormSG must be submitted before the e-Tender closing date and time.
+
+### Is there a maximum number of times I can submit my tender bid for each stall?
+
+Each tenderer is allowed to submit only one (
+### Q1: bid for each stall.  If the tenderer submits more than one (1) bid for the same stall, all his tender bids are liable to be rejected.
+
+### Can I discuss my tender bid with another person?
+
+When submitting your tender bid through FormSG, it is important that you complete the Form of Tender by yourself. Do not discuss the bid prices or consult anyone else regarding the tender details. This includes factors used to calculate bid prices and the decision to tender. If you require assistance from another person to fill in the FormSG, please do not discuss the bid prices or consult that or any other person regarding the tender details.
+
+## Amending Tender Details
+
+or Tendered Rent After Submitting Form of Tender via FormSG
+
+### Can I edit / amend / change my particulars or tendered rent after I have submitted via FormSG?
+
+You are unable to edit / amend / change your particulars or tendered rent in FormSG after submission. All tender submissions are final and irrevocable.
+
+## Withdrawal of Tender
+
+Bids
+
+### I want to withdraw my tender bids.  What should I do?
+
+Please submit your request to withdraw your tender bids at NEA Online Feedback Form (www.nea.gov.sg/feedback).  Please provide your name, NRIC, contact number, hawker centre / market tendered, stall number tendered and Response ID from the successful FormSG submission.
+Tenderers who withdraw their tender bids before tender closing will have their tender deposit of $500 refunded via the same payment method the tenderer used to make the payment.
+Tenderers who withdraw their tender before the e-Tender closing date will receive a refund of the $500 tender deposit. The refund will be processed using the same payment method used for the e-Tender submission. For example, if payment was made with a credit card, the refund will also be credited to the same credit card.
+
+### Will my tender deposit be forfeited if I withdraw my tender bids after tender closed?
+
+Tenderers who withdraw their tender after the e-Tender closing date, but before the award of the tenancy, will forfeit the $500 tender deposit.
+
+## Tender Results
+
+### When and where will the e-Tender results be published?
+
+The 5 highest tender bids may be released within 1 week after e-Tender is closed. The final results may be released 5 to 7 weeks after e-tender is closed, depending on the tender bids and complexity of the evaluation process.
+The Tenancy Agreement (TA) shall commence on the 1st of the following month after the release of the e-Tender results. The estimated timelines herein serve as a guide and are subject to confirmation by NEA.
+The above results will be posted on NEA website at go.gov.sg/tendernotice and displayed on the notice board at our One-Stop Information and Service Centre located at HDB Hub (East Wing), 480 Lorong 6 Toa Payoh, #26-01, Singapore 
+### Q310480: How will I know if I have been awarded the stall?
+
+NEA will send you a Letter of Offer. You will be required to digitally sign the Tenancy Agreement via the Hawkers Online portal.
+If your bid is unsuccessful, NEA will refund your tender deposit of $
+### Q500: You may receive the refund within 7 weeks after the tender is closed. The refund will be processed using the same payment method used for the e-Tender submission. For example, if payment was made with a credit card, the refund will also be credited to the same credit card.
+
+The refund of $500 tender deposit will be via the same payment method the tenderer used to make the payment. For example, if the tenderer has paid via credit card, the refund will be to the credit card.
+NEA will send an email notification to confirm the issuance of the refund. Please note that it may take approximately 10 days for your bank statement to reflect the refund, depending on the bank. If the update takes longer than this duration, you may wish to contact your bank for further assistance.
+
+### Will I be penalised if I decide not to take up the stall after a successful bid?
+
+## Successful Tender
+
+ers who decide not to take up the stall, will have their tender deposit of $500 forfeited. The tenderer will be debarred from participating in all government / statutory board tenders. The tenderer will also be blacklisted from registering as a stallholder, nominee, joint operator, or hawker assistant.
+
+### Will I be awarded the stall if I am the single bidder?
+
+Vacant stalls are awarded to the highest bidders, as long as there are competitive bids. You will not be awarded the stall if you are the single bidder when the stall is first released or previously released with no bids. The stall will be returned to the tender pool in the subsequent months. This is to ensure fair allocation of stalls based on market interest and the stall is awarded at a price that is representative of market sentiments.
+If the same stall receives bids in the subsequent tender exercises, NEA will award the stall to the bidder even if there is only one bid.
+
+### Do I need to bid again in the following months if I am the single bidder for a particular stall that is first released or previously released with no bids this time?
+
+Yes, if you are a single bidder and the stall is returned to the tender pool, you will have to submit a fresh bid.
+
+### If a person with the highest bid decides not to take up the stall, can one with the second highest bid automatically take over?
+
+No, the stall will be returned to the tender pool and re-offered for tender in the following months.
+Successful Tender
+
+### What do I do after successfully bidding for a hawker stall?
+
+After successfully bidding for a hawker stall, you will receive a Letter of Offer from NEA. You are required to digitally sign the Tenancy Agreement via the Hawkers Online portal.
+
+### What should I prepare before signing the Tenancy Agreement?
+
+You should have a PayNow bank account linked to your NRIC number. If you are operating a cooked food stall, you are required to obtain the SkillsFuture Singapore (SSG) Food Safety Course Certificates before signing of the Tenancy Agreement for the stall. NEA will not issue the SFA stall licence to you to operate the stall if you fail to submit the above document. You are not allowed to commence operation of the stall without a stall licence.
+
+### What do I need to pay during e-Tenancy signing?
+
+You are required to pay the following charges which comprise:
+1st month rent.
+1st month Service & Conservancy Charges (S&CC).
+1st month table cleaning fee (for cooked food stalls only).
+Security deposit equivalent to 2 months’ rent, or a minimum deposit of $100 for market stall or $200 for cooked food stall (whichever is higher).
+SFA hawker stall licence fee for 3 years (where applicable).
+Stamp fee, where applicable.
+
+### I have digitally signed the Tenancy Agreement. What should I do next?
+
+You are required to:
+Visit our One-Stop Information and Service Centre (OSISC) at HDB Hub, East Wing, #26-01, 480 Lorong 6 Toa Payoh, Singapore 310480 from Mondays to Fridays, 
+### Q8: 30am to 5.30pm, for the collection the stall keys and submission of completed Giro Application Form.
+
+Open an utility account (i.e. electricity, water and gas)
+Apply to NEA for approval to carry out Additions & Alterations (A&A) work to renovate the stall.
+You should purchase fire insurance to protect stall contents and personal belongings. You are given up to 3 months to commence operations. However, once the tenancy commences, rental will be collected. No rent-free fitting period will be given if more time is required for renovation after the tenancy commenced.
+
+### What do I need to take note of when operating my hawker stall?
+
+Please take note of the terms in your Tenancy Agreement. Key terms / conditions are highlighted below for your reference:
+You are to operate the stall personally (subletting of stall is not allowed).
+You cannot assign your stall to another person.
+You are not allowed to leave your stall vacant or use it for storage purposes.
+Keep your stall clean and tidy.
+Your hawker assistant must be a registered food handler (for cooked food stall).
+Ensure that the gas, electricity or other fuels used for cooking are installed by licensed personnel.
+
+### If I tender for a Halal cooked food / Indian cuisine stall, can I change to sell non-Halal cooked food / non-Indian cuisine after a successful bid?
+
+No, you are not allowed to change your article of sale, as this will be unfair to the other unsuccessful tenderers.
+
+## Protection Against Scams
+
+### How do I avoid falling prey to phishing scams?
+
+It is important to stay vigilant and take necessary precaution to avoid falling prey to phishing scams. Here are some tips on how to protect yourself against phishing scams impersonating NEA:
+Do not share your Singpass ID / password or banking details with anyone.
+Stay vigilant and only click on links from trusted source. Always log in to FormSG from the official NEA website at https://www.nea.gov.sg/
+Do verify the sender
+For emails from FormSG on the successful tender submission, ensure that the sender’s email address is correctly spelt and ends with @mail.form.gov.sg
+All official emails from NEA will be sent from addresses ending with “@nea.gov.sg”
+NEA officers will not make phone calls to you with a prefix "+65". If you receive a call with a prefix that includes a plus (+) sign, it is likely to be an overseas call. Be cautious when receiving such calls and verify the identity of the caller before sharing any personal information.
+
+### How do I check if the call or email is from NEA?
+
+We may contact tenderers via voice call or email using email addresses ending with “@nea.gov.sg”. We will not ask for bank transfers, personal details, bank account and credit card details, Singpass details or One-Time Passwords (OTPs) over the phone or email.
+Please check what you have received is from NEA before you provide any information. To check, you can contact our NEA Contact Centre at 6225 5632 or write to us via NEA Online Feedback Form (www.nea.gov.sg/feedback).
+
+## Security and Data Protection
+
+Matters
+
+### Is FormSG safe?
+
+All responses are stored in encrypted format, meaning no one except form administrators are able to view or download responses.
+
+### Can anybody see my tender submissions before the closing date / time?
+
+No, your submissions can only be seen by NEA authorised personnel after the tender closing date / time.
+
+### What are the security measures taken to protect my submitted data in FormSG?
+
+FormSG takes security measures to protect the data submitted through its forms. All form response data is stored on FormSG's servers in an encrypted state. This means that even if the servers are compromised by an attack, the attackers will not be able to decrypt and view the response data. This ensures that your data remains secure and confidential.
+
+### Why do I have to login to FormSG using Singpass?
+
+In line with the Whole of Government movement towards strengthening data governance measures, this one-time Singpass verification will safeguard users against potential fraud (eg. Impersonation).
+
+### What personal information will be retrieved when I login with Singpass?
+
+Only the NRIC will be retrieved after Singpass login as proof of identity.
+Why am I not provided a screenshot / summary of my tender submission after I have submitted
+
+### the FormSG?
+
+To maintain the confidentiality of tender bids, a summary or screenshot of the FormSG submission is not available after the form is submitted. Instead, you will receive an acknowledgement email from FormSG confirming that the tender submission is successful. If you need a record of your tender submission, you may wish to take a screenshot of the FormSG Form of Tender before submitting. This will allow you to keep a record of the information you submitted for your own reference.
+
+## Contact Information
+
+### Who can I contact for enquiries related to the e-Tender?
+
+If you have any enquiries related to the e-Tender, you can contact our NEA Contact Centre at 6225 5632 or submit your enquiry at NEA Online Feedback Form (www.nea.gov.sg/feedback).
+
+### How do I report fake "NEA" websites, phone scams or email scams?
+
+If you come across any fake "NEA" websites, phone scams or email scams, you can call the anti-scam helpline at 1800 722 6688 to report any suspicious calls or emails, or any websites that you suspect to be fake versions of the official NEA website.
+If you have been a victim of a scam and have incurred monetary loss, loss of personal information, or discovered that your online account has been hacked or compromised, file a police report immediately. You can do this by calling the police hotline at 1800 255 0000 or visiting any nearest Neighbourhood Police Centre or Post.
