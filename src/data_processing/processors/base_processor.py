@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import List, Dict, Tuple, Optional, Union
 from dataclasses import dataclass
 from datetime import datetime
+import logging
 import re
 import json
 import docx
@@ -24,6 +25,8 @@ else:
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 DATA_DIR = os.path.join(PROJECT_ROOT, 'data')
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class ProcessedDocument:
@@ -51,34 +54,6 @@ class BasePreprocessor:
         pattern = fr"## {section_name}.*?(?=## |\Z)"  # Note the 'r' prefix
         match = re.search(pattern, self.processed_text, re.DOTALL)
         return match.group(0) if match else ""
-
-class FAQPreprocessor(BasePreprocessor):
-    """Preprocesses FAQ document."""
-    
-    def process(self) -> str:
-        """Process FAQ document."""
-        text = self.raw_text
-        
-        # Basic cleanup first
-        text = self._basic_cleanup(text)
-        
-        # Remove internal notes
-        text = self._remove_internal_notes(text)
-        
-        # Remove revision history
-        text = self._remove_revision_history(text)
-        
-        # Format main sections
-        text = self._format_sections(text)
-        
-        # Format individual FAQs
-        text = self._format_questions(text)
-        
-        # Add metadata
-        text = self._add_metadata(text)
-        
-        self.processed_text = text
-        return text
     
     def _basic_cleanup(self, text: str) -> str:
         """Initial cleanup of text."""
@@ -96,325 +71,6 @@ class FAQPreprocessor(BasePreprocessor):
         text = '\n'.join(line for line in lines if line)
         
         return text
-    
-    def _remove_internal_notes(self, text: str) -> str:
-        """Remove internal CC notes."""
-        # Remove anything between [[ and ]]
-        text = re.sub(r'\[\[.*?\]\].*?\+=+\+', '', text, flags=re.DOTALL)
-        return text
-    
-    def _remove_revision_history(self, text: str) -> str:
-        """Remove revision history section."""
-        # Remove the revision history section and everything after it
-        text = re.sub(r'REVISION HISTORY.*$', '', text, flags=re.DOTALL | re.IGNORECASE)
-        return text.strip()
-    
-    def _format_sections(self, text: str) -> str:
-        """Format main FAQ sections."""
-        # Start with the title
-        result = "# Frequently Asked Questions (FAQs) on Electronic Tender (e-Tender)\n\n"
-        
-        # Define section patterns with more flexible matching
-        sections = {
-            r'Eligibility\s*(?:\n|$)': "Eligibility",
-            r'About\s+e-?Tender\s*(?:\n|$)': "About e-Tender",
-            r'Preparations?\s+Before\s+Tendering': "Preparations Before Tendering",
-            r'Considerations?\s+to\s+Tender': "Considerations for Tendering",
-            r'Submitting\s+a\s+Tender\s+Bid': "Submitting a Tender Bid",
-            r'Amend\s+Particulars': "Amending Tender Details",
-            r'Withdrawal\s+of\s+Tender': "Withdrawal of Tender",
-            r'Tender\s+Results': "Tender Results",
-            r'Successful\s+Tender': "Successful Tender",
-            r'Protection\s+Against\s+Scams': "Protection Against Scams",
-            r'Security\s+and\s+Data\s+Protection': "Security and Data Protection",
-            r'Contact\s+Information': "Contact Information"
-        }
-        
-        current_text = text
-        for pattern, section_name in sections.items():
-            # Look for the section pattern
-            matches = re.split(f'({pattern})', current_text, flags=re.IGNORECASE)
-            if len(matches) > 1:
-                # Add any text before the section
-                if matches[0].strip():
-                    result += matches[0].strip() + "\n\n"
-                # Add the section header
-                result += f"## {section_name}\n\n"
-                # Continue with remaining text
-                current_text = ''.join(matches[2:])
-        
-        # Add any remaining text
-        if current_text.strip():
-            result += current_text.strip() + "\n"
-        
-        return result
-    
-    def _format_questions(self, text: str) -> str:
-        """Format individual FAQ entries."""
-        # Pattern to match numbered questions, handling various formats
-        patterns = [
-            # Standard numbered questions
-            (r'(\d+)[\.|\)]\s*(?:\*\*)?(.*?)(?:\*\*)?\s*(?=\n|$)', r'\n### Q\1: \2\n'),
-            # Questions ending with question mark
-            (r'^([^#\n].*?\?)\s*$', r'\n### \1\n'),
-            # Cleanup excessive newlines
-            (r'\n{3,}', '\n\n'),
-            # Format bullet points
-            (r'(?m)^[•●]\s+', '- '),
-            # Remove any remaining asterisks
-            (r'\*\*', '')
-        ]
-        
-        # Apply all patterns
-        for pattern, replacement in patterns:
-            text = re.sub(pattern, replacement, text, flags=re.MULTILINE)
-        
-        return text
-    
-    def _add_metadata(self, text: str) -> str:
-        """Add metadata for better retrieval."""
-        metadata = """<!-- Document Metadata
-Type: FAQ
-Purpose: Quick reference guide for e-tender process
-Target Users: New hawker stall tenderers
-Last Updated: March 2024
-Topics: eligibility, e-tender process, payments, security, data protection
--->\n\n"""
-        return metadata + text
-
-class TenderTermsPreprocessor(BasePreprocessor):
-    """Preprocesses Terms and Conditions document."""
-    
-    def process(self) -> str:
-        """Process Terms and Conditions document."""
-        text = self.raw_text
-        
-        # Add consistent title formatting
-        text = self._format_main_title(text)
-        
-        # Standardize section headers
-        text = self._format_section_headers(text)
-        
-        # Format clause numbers and subsections
-        text = self._format_clauses(text)
-        
-        # Add section metadata
-        text = self._add_section_metadata(text)
-        
-        self.processed_text = text
-        return text
-    
-    def _format_main_title(self, text: str) -> str:
-        """Format the main title section."""
-        title_pattern = r"TERMS AND CONDITIONS OF TENDER\s*\nVer \d+: [A-Za-z]+ \d{4}"
-        replacement = """
-# TERMS AND CONDITIONS OF TENDER
-## Version Information
-{submatch}
-
-## Document Overview
-This document outlines the terms and conditions for hawker stall tenders.
-"""
-        return re.sub(title_pattern, lambda m: replacement.format(submatch=m.group(0)), text)
-    
-    def _format_section_headers(self, text: str) -> str:
-        """Format all major section headers."""
-        section_headers = {
-            "Eligibility": 2,
-            "Tendering": 2,
-            "Market Stall": 2,
-            "Cooked Food Stall": 2,
-            "Successful Tenderer": 2,
-            "Anti-Collusion": 2,
-            "Reporting of Anti-competitive Conduct": 3,
-            "Warranty": 3,
-            "Disclosure of Prior Anti-competitive Conduct": 3
-        }
-        
-        for header, level in section_headers.items():
-            pattern = f"({header}\\s*\n)"
-            hashes = "#" * level
-            text = re.sub(pattern, f"\n{hashes} {header}\n\n", text)
-        
-        return text
-    
-    def _format_clauses(self, text: str) -> str:
-        """Format clause numbers and subsections."""
-        text = re.sub(r"^(\d+)\.\s+", r"\n### Clause \1\n", text, flags=re.MULTILINE)
-        text = re.sub(r"^(\d+\.\d+)\s+", r"#### \1\n", text, flags=re.MULTILINE)
-        text = re.sub(r"^(\d+\.\d+\.\d+)\s+", r"##### \1\n", text, flags=re.MULTILINE)
-        return text
-    
-    def _add_section_metadata(self, text: str) -> str:
-        """Add metadata tags for better context retrieval."""
-        sections = {
-            "Eligibility": "Clauses 2-6: Requirements for tender submission",
-            "Tendering": "Clauses 7-17: Process and rules for submitting tenders",
-            "Market Stall": "Clause 18: Specific rules for market stalls",
-            "Cooked Food Stall": "Clauses 19-23: Specific rules for cooked food stalls",
-            "Successful Tenderer": "Clauses 24-40: Obligations and requirements for successful tenderers",
-            "Anti-Collusion": "Clause 41: Rules preventing anti-competitive behavior"
-        }
-        
-        for section, description in sections.items():
-            pattern = f"(## {section})"
-            metadata = f"""
-<!-- Section Metadata
-Type: Terms and Conditions
-Section: {section}
-Description: {description}
--->
-
-"""
-            text = re.sub(pattern, f"{metadata}\\1", text)
-        
-        return text
-
-class TenderNoticePreprocessor(BasePreprocessor):
-    """Preprocesses Tender Notice document."""
-    
-    def __init__(self, input_text: str):
-        super().__init__(input_text)
-        self.special_notes = {}
-    
-    def process(self) -> str:
-        """Process Tender Notice document."""
-        text = self.raw_text
-        
-        # Format main header and dates
-        text = self._format_header_section(text)
-        
-        # Process special notes and markers
-        text = self._process_special_notes(text)
-        
-        # Format main sections
-        text = self._format_main_sections(text)
-        
-        # Format rental sections
-        text = self._format_rental_sections(text)
-        
-        # Process location-specific rules
-        text = self._format_location_rules(text)
-        
-        # Format tender details
-        text = self._format_tender_details(text)
-        
-        self.processed_text = text
-        return text
-    
-    def _format_header_section(self, text: str) -> str:
-        """Format the main header and tender dates section."""
-        dates_pattern = r"\[Opening on .*?\] *\n *\[Closing on .*?\]"
-        
-        def format_dates(match):
-            dates_text = match.group(0)
-            return """
-## Tender Dates
-### Opening
-{opening_date}
-### Closing
-{closing_date}
-""".format(
-                opening_date=re.search(r"\[Opening on (.*?)\]", dates_text).group(1),
-                closing_date=re.search(r"\[Closing on (.*?)\]", dates_text).group(1)
-            )
-        
-        text = re.sub(dates_pattern, format_dates, text)
-        text = re.sub(r"TENDER NOTICE", "# TENDER NOTICE\n## August 2024", text)
-        return text
-    
-    def _process_special_notes(self, text: str) -> str:
-        """Process and format special notes and markers."""
-        text = re.sub(r"\[Important Notes\]:\s*", "\n## Important Notes\n", text)
-        
-        markers = {
-            r"\*\*\*\*": "SPECIAL_NOTE_4",
-            r"\*\*\*": "SPECIAL_NOTE_3",
-            r"\*\*": "SPECIAL_NOTE_2",
-            r"\*": "SPECIAL_NOTE_1",
-            r"\+": "HALAL_NOTE",
-            r"\^": "INDIAN_CUISINE_NOTE"
-        }
-        
-        for marker, replacement in markers.items():
-            notes = re.findall(f"{marker}\\s*(.*?)\\s*(?={marker}|$)", text, re.DOTALL)
-            if notes:
-                self.special_notes[replacement] = notes
-            
-            text = re.sub(
-                f"{marker}\\s*(.*?)\\s*(?={marker}|$)",
-                f"\n> Note ({replacement}): \\1\n",
-                text
-            )
-        
-        return text
-    
-    def _format_main_sections(self, text: str) -> str:
-        """Format main document sections."""
-        section_patterns = {
-            r"Tenders for Rental of \[Cooked Food\] Stalls":
-                "\n## Cooked Food Stall Rentals\n",
-            r"Tenders for Rental of \[Market\] Stalls":
-                "\n## Market Stall Rentals\n",
-            r"\[Details of Tender\]":
-                "\n## Tender Details\n",
-            r"\[Important Notes for All Tenderers\]":
-                "\n## General Important Notes\n"
-        }
-        
-        for pattern, replacement in section_patterns.items():
-            text = re.sub(pattern, replacement, text)
-        
-        return text
-    
-    def _format_rental_sections(self, text: str) -> str:
-        """Format rental-specific sections."""
-        text = re.sub(
-            r"(\n\* Please choose only \[ONE\] type of trade of sale.*?)\n",
-            "\n### Trade Type Selection Requirements\\1\n",
-            text
-        )
-        
-        text = re.sub(
-            r"(\n\* Not for sale of.*?at \[.*?\].*?)\n",
-            "\n### Location-Specific Restrictions\\1\n",
-            text
-        )
-        
-        return text
-    
-    def _format_location_rules(self, text: str) -> str:
-        """Format location-specific rules."""
-        location_pattern = r"\[([^\]]+)\](?=.*?(?:not allowed|not permitted|restricted))"
-        
-        def format_location(match):
-            location = match.group(1)
-            return f"\n#### Restrictions for {location}\n"
-        
-        text = re.sub(location_pattern, format_location, text)
-        return text
-    
-    def _format_tender_details(self, text: str) -> str:
-        """Format tender details section."""
-        text = re.sub(
-            r"Eligibility Criteria:(.*?)(?=-|$)",
-            "### Eligibility Requirements\\1",
-            text,
-            flags=re.DOTALL
-        )
-        
-        text = re.sub(
-            r"Tender bids shall be submitted.*?(?=-|$)",
-            "### Submission Requirements\\0",
-            text,
-            flags=re.DOTALL
-        )
-        
-        return text
-    
-    def get_special_notes(self) -> Dict[str, List[str]]:
-        """Return processed special notes."""
-        return self.special_notes
 
 class DocumentProcessor:
     """Main document processing coordinator."""
@@ -428,15 +84,20 @@ class DocumentProcessor:
     @staticmethod
     def process_document(file_path: Path) -> ProcessedDocument:
         """Process a document based on its type."""
+        # Import processors here to avoid circular imports
+        from .faq_processor import FAQPreprocessor
+        from .tender_terms_processor import TenderTermsPreprocessor
+        from .tender_notice_processor import TenderNoticePreprocessor
+        
         file_name = file_path.name.lower()
         
-        # Read the file content
+        # Rest of the method stays the same...
         if file_path.suffix == '.docx':
             raw_text = DocumentProcessor.process_docx(file_path)
         else:
             with open(file_path, 'r', encoding='utf-8') as f:
                 raw_text = f.read()
-        
+                
         # Determine document type and process accordingly
         if "faq" in file_name:
             preprocessor = FAQPreprocessor(raw_text)
@@ -449,7 +110,7 @@ class DocumentProcessor:
                     "date": "Mar 2024"
                 }
             )
-        if "terms and conditions" in file_name:
+        elif "terms and conditions" in file_name:
             preprocessor = TenderTermsPreprocessor(raw_text)
             processed_text = preprocessor.process()
             return ProcessedDocument(
@@ -460,7 +121,6 @@ class DocumentProcessor:
                     "date": "Aug 2024"
                 }
             )
-        
         elif "tender notice" in file_name:
             preprocessor = TenderNoticePreprocessor(raw_text)
             processed_text = preprocessor.process()
@@ -473,7 +133,6 @@ class DocumentProcessor:
                 },
                 special_notes=preprocessor.get_special_notes()
             )
-        
         else:
             # For other documents, return as-is with basic metadata
             return ProcessedDocument(
