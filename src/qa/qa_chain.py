@@ -10,7 +10,7 @@ from langchain_community.vectorstores import FAISS
 from langchain.prompts import PromptTemplate
 from langchain.docstore.document import Document
 
-from .document_manager import DocumentManager
+from src.data_processing.managers.document_manager import DocumentManager
 
 logger = logging.getLogger(__name__)
 

@@ -15,9 +15,9 @@ import os
 from dotenv import load_dotenv
 from math import radians, sin, cos, sqrt, atan2
 
-from src.data_handlers.qa_chain import setup_hawker_guru
+from src.qa.qa_chain import setup_hawker_guru
 from src.helper_functions.utility import check_password
-from src.data_handlers.data_models import LocationDetails, NearbyCenter, CalculationResults
+from src.models.data_models import LocationDetails, NearbyCenter, CalculationResults
 
 # Constants
 RADIUS_OPTIONS = [0.5, 1, 1.5, 2, 2.5, 3, 5]  # kilometers

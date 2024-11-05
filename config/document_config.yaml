@@ -1,0 +1,20 @@
+faq:
+  archive_pattern: faq_%Y%m%d.txt
+  current_file: faq_latest.txt
+  description: Frequently Asked Questions document
+  preprocessor: FAQPreprocessor
+paths:
+  archive: data/archive
+  current: data/current
+  processed: data/processed
+  raw: data/raw
+tender_notice:
+  archive_pattern: tender_notice_%Y%m%d.txt
+  current_file: tender_notice_latest.txt
+  description: Current tender notice
+  preprocessor: TenderNoticePreprocessor
+terms_and_conditions:
+  archive_pattern: terms_%Y%m%d.txt
+  current_file: terms_latest.txt
+  description: Terms and conditions document
+  preprocessor: TenderTermsPreprocessor
