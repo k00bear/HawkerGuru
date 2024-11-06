@@ -130,7 +130,7 @@ def setup_qa_chain(documents: List[Document]) -> ConversationalRetrievalChain:
     qa_chain = ConversationalRetrievalChain.from_llm(
         llm=ChatOpenAI(
             temperature=0,
-            model_name="gpt-4",
+            model_name="gpt-4o-mini",
             max_tokens=2048
         ),
         retriever=retriever,

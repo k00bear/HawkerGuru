@@ -1,0 +1,65 @@
+# Copy and paste the below code into https://mermaid.live/ to generate the image
+
+graph TB
+    User(("User Input")) --> QueryPrep["Query Preparation"]
+    
+    subgraph Document_Processing["1. Document Processing"]
+        direction TB
+        Raw["Raw Documents"] --> Processor["Document Processor"]
+        Processor --> Chunks["Text Chunking"]
+        Chunks --> Embed["Embedding Generation"]
+        Embed --> VStore["FAISS Vector Store"]
+        
+        style Raw fill:#e6f3ff,stroke:#333
+        style Processor fill:#e6f3ff,stroke:#333
+        style Chunks fill:#e6f3ff,stroke:#333
+        style Embed fill:#e6f3ff,stroke:#333
+        style VStore fill:#e6f3ff,stroke:#333
+    end
+
+    subgraph RAG_Process["2. RAG Pipeline"]
+        direction TB
+        QueryPrep --> Search["Semantic Search"]
+        VStore --> Search
+        Search --> Context["Context Assembly"]
+        
+        style Search fill:#f0f7ff,stroke:#333
+        style Context fill:#f0f7ff,stroke:#333
+    end
+
+    subgraph LLM_Processing["3. LLM Processing"]
+        direction TB
+        Context --> Step1["Step-by-Step Instructions"]
+        Step1 --> Step2["Inner Monologue"]
+        Step2 --> Template["Custom Prompt Template"]
+        Template --> LLM["Claude LLM"]
+        
+        style Step1 fill:#fff0f0,stroke:#333
+        style Step2 fill:#fff0f0,stroke:#333
+        style Template fill:#fff0f0,stroke:#333
+        style LLM fill:#fff0f0,stroke:#333
+    end
+
+    LLM --> Response["AI Response"]
+    Response --> User
+
+    classDef user fill:#ff9999,stroke:#333
+    classDef process fill:#99ccff,stroke:#333
+    classDef output fill:#99ff99,stroke:#333
+
+    class User,Response user
+    class QueryPrep process
+    class Response output
+
+    %% Add annotations
+    note1["Uses Linear Chain for\nDocument Processing"]
+    note2["Implements Decision Chain for\nContext Selection"]
+    note3["Applies Step-by-Step and\nInner Monologue Techniques"]
+
+    Document_Processing -.- note1
+    RAG_Process -.- note2
+    LLM_Processing -.- note3
+
+    style note1 fill:#ffffcc,stroke:#333
+    style note2 fill:#ffffcc,stroke:#333
+    style note3 fill:#ffffcc,stroke:#333
