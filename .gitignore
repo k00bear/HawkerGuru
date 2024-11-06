@@ -23,9 +23,13 @@ dist/
 # Streamlit
 .streamlit/secrets.toml
 
-# Raw Data
-data/01_raw/
+# Raw and acrhive data
+data/raw/
+data/archive/
 
-# tests
+# Tests
 tests/
-versions/
+scripts/
+
+# Development checks
+tree.txt
