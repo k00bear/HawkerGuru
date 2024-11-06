@@ -36,9 +36,9 @@ st.markdown("---")
 st.markdown('<p class="medium-font">Project Scope</p>', unsafe_allow_html=True)
 with st.container():
     st.markdown("""
-    Hawker Guru addresses the critical issue of inflated hawker stall tender bids in Singapore:
+    HawkerGuru addresses the critical issue of inflated hawker stall tender bids in Singapore:
     
-    - **Target Users**: 3,500-4,000 unique tenderers participating in monthly hawker stall tenders annually
+    - **Target Users**: 4,000-4,500 unique tenderers participating in monthly hawker stall tenders annually
     - **Focus Area**: Empowering informed bidding through the use of AI
     - **Geographic Coverage**: Singapore's Hawker Centres
     - **Problem Domain**: Bid price rationalization and business planning support
