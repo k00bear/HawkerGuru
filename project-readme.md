@@ -28,6 +28,11 @@ hawker_guru/
 ├── .streamlit/             # Streamlit configuration
 ├── HawkerGuru.py          # Main Streamlit application
 └── requirements.txt       # Project dependencies
+
+# Development Environment
+├── .venv/                    # Virtual environment
+├── .vscode/                  # VS Code settings
+└── .devcontainer/            # Development container settings
 ```
 
 ## Directory Descriptions
