@@ -10,10 +10,10 @@ hawker_guru/
 │   ├── document_config.yaml   # Document processing configuration
 │   └── .env                  # Environment variables
 ├── data/                     # All data files
-│   ├── raw/                  # Original source files (e.g., Excel, GEOJSON)
+│   ├── raw/                  # Original source files (e.g., Excel, GEOJSON) - Not tracked by Git
 │   ├── processed/            # Intermediate processed files
 │   ├── current/             # Latest versions of processed documents
-│   └── archive/             # Historical versions of processed files
+│   └── archive/             # Historical versions of processed files - Not tracked by Git
 ├── src/                      # Source code
 │   ├── data_processing/      # Data processing modules
 │   │   ├── converters/      # Format conversion utilities
